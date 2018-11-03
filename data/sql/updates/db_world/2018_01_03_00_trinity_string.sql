@@ -1,0 +1,1 @@
+UPDATE `world`.`trinity_string` SET `content_default`='│ Latency: %u ms' WHERE  `entry`=749;

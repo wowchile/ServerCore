@@ -1,0 +1,1 @@
+update quest_template set RewardFactionValue1 = 0, RewardFactionValue2 = 0 where LogTitle like '%the Elder';

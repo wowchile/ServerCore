@@ -1,0 +1,1 @@
+UPDATE creature_loot_template SET ChanceOrQuestChance = 10 WHERE item = 43297; -- Damaged Necklace
