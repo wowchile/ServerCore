@@ -196,6 +196,7 @@ void ScriptMgr::Unload()
     SCR_CLEAR(PlayerScript);
     SCR_CLEAR(GuildScript);
     SCR_CLEAR(GroupScript);
+    SCR_CLEAR(BGScript);
 
     #undef SCR_CLEAR
 }
@@ -265,6 +266,7 @@ void ScriptMgr::CheckIfScriptsInDatabaseExist()
                 !ScriptRegistry<AchievementCriteriaScript>::GetScriptById(sid) &&
                 !ScriptRegistry<PlayerScript>::GetScriptById(sid) &&
                 !ScriptRegistry<GuildScript>::GetScriptById(sid) &&
+                !ScriptRegistry<BGScript>::GetScriptById(sid) &&
                 !ScriptRegistry<GroupScript>::GetScriptById(sid))
                 sLog->outErrorDb("Script named '%s' is assigned in database, but has no code!", (*itr).c_str());
         }
@@ -1624,6 +1626,24 @@ void ScriptMgr::OnAfterArenaRatingCalculation(Battleground *const bg, int32 &win
     FOREACH_SCRIPT(FormulaScript)->OnAfterArenaRatingCalculation(bg, winnerMatchmakerChange, loserMatchmakerChange, winnerChange, loserChange);
 }
 
+// BGScript
+void ScriptMgr::OnBattlegroundStart(Battleground* bg)
+{
+    FOREACH_SCRIPT(BGScript)->OnBattlegroundStart(bg);
+}
+void ScriptMgr::OnBattlegroundEndReward(Battleground* bg, Player* player, TeamId winnerTeamId)
+{
+    FOREACH_SCRIPT(BGScript)->OnBattlegroundEndReward(bg, player, winnerTeamId);
+}
+void ScriptMgr::OnBattlegroundUpdate(Battleground* bg, uint32 diff)
+{
+    FOREACH_SCRIPT(BGScript)->OnBattlegroundUpdate(bg, diff);
+}
+void ScriptMgr::OnBattlegroundAddPlayer(Battleground* bg, Player* player)
+{
+    FOREACH_SCRIPT(BGScript)->OnBattlegroundAddPlayer(bg, player);
+}
+
 AllMapScript::AllMapScript(const char* name)
     : ScriptObject(name)
 {
@@ -1799,6 +1819,12 @@ GlobalScript::GlobalScript(const char* name)
     ScriptRegistry<GlobalScript>::AddScript(this);
 }
 
+BGScript::BGScript(char const* name)
+    : ScriptObject(name)
+{
+    ScriptRegistry<BGScript>::AddScript(this);
+}
+
 // Instantiate static members of ScriptRegistry.
 template<class TScript> std::map<uint32, TScript*> ScriptRegistry<TScript>::ScriptPointerList;
 template<class TScript> std::vector<TScript*> ScriptRegistry<TScript>::ALScripts;
@@ -1834,6 +1860,7 @@ template class ScriptRegistry<UnitScript>;
 template class ScriptRegistry<AllCreatureScript>;
 template class ScriptRegistry<AllMapScript>;
 template class ScriptRegistry<MovementHandlerScript>;
+template class ScriptRegistry<BGScript>;
 
 // Undefine utility macros.
 #undef GET_SCRIPT_RET

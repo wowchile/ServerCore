@@ -1017,6 +1017,22 @@ class GlobalScript : public ScriptObject
         virtual void OnBeforeUpdateArenaPoints(ArenaTeam* /*at*/, std::map<uint32, uint32> & /*ap*/) { }
 };
 
+class BGScript : public ScriptObject
+{
+protected:
+    BGScript(const char* name);
+public:
+    bool IsDatabaseBound() const { return false; }
+    // Start Battleground
+    virtual void OnBattlegroundStart(Battleground* /*bg*/) { }
+    // End Battleground
+    virtual void OnBattlegroundEndReward(Battleground* /*bg*/, Player* /*player*/, TeamId /*winnerTeamId*/) { }
+    // Update Battleground
+    virtual void OnBattlegroundUpdate(Battleground* /*bg*/, uint32 /*diff*/) { }
+    // Add Player in Battleground
+    virtual void OnBattlegroundAddPlayer(Battleground* /*bg*/, Player* /*player*/) { }
+};
+
 // Placed here due to ScriptRegistry::AddScript dependency.
 #define sScriptMgr ACE_Singleton<ScriptMgr, ACE_Null_Mutex>::instance()
 
@@ -1320,6 +1336,12 @@ class ScriptMgr
         //listener functions are called by OnPlayerEnterMap and OnPlayerLeaveMap
         //void OnPlayerEnterAll(Map* map, Player* player);
         //void OnPlayerLeaveAll(Map* map, Player* player);
+    
+    public: /* BGScript */
+        void OnBattlegroundStart(Battleground* bg);
+        void OnBattlegroundEndReward(Battleground* bg, Player* player, TeamId winnerTeamId);
+        void OnBattlegroundUpdate(Battleground* bg, uint32 diff);
+        void OnBattlegroundAddPlayer(Battleground* bg, Player* player);
 
     private:
 
