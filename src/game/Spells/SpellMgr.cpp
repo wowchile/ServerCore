@@ -5832,6 +5832,11 @@ void SpellMgr::LoadDbcDataCorrections()
         case 74637:
             spellInfo->speed = 0;
             break;
+        // BCL: Fix resistances not applying to Meteor Strike and Combustion - XDevICCI
+        case 75952:
+        case 74629:
+            spellInfo->AttributesEx4 &= ~SPELL_ATTR4_IGNORE_RESISTANCES;
+            break;
 
 
         // ///////////////////////////////////////////
