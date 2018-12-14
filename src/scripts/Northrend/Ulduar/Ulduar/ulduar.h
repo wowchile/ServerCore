@@ -122,6 +122,7 @@ enum UlduarNPCs
     NPC_HODIR_KEEPER                        = 33411,
     NPC_MIMIRON_KEEPER                      = 33412,
     NPC_THORIM_KEEPER                       = 33413,
+    NPC_MARKED_IMMORTAL_GUARDIAN            = 36064,
 
     // Flame Leviathan
     NPC_SALVAGED_SIEGE_ENGINE               = 33060,
@@ -130,7 +131,6 @@ enum UlduarNPCs
     NPC_SALVAGED_DEMOLISHER                 = 33109,
     NPC_SALVAGED_DEMOLISHER_TURRET          = 33167,
 
-    
     // Algalon the Observer
     NPC_BRANN_BRONZBEARD_ALG                = 34064,
     NPC_AZEROTH                             = 34246,

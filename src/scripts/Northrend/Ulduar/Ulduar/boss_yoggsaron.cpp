@@ -2417,6 +2417,35 @@ class spell_yogg_saron_destabilization_matrix : public SpellScriptLoader
         }
 };
 
+class spell_yogg_saron_shadow_beacon : public SpellScriptLoader     // 64465
+{
+public:
+    spell_yogg_saron_shadow_beacon() : SpellScriptLoader("spell_yogg_saron_shadow_beacon") { }
+    class spell_yogg_saron_shadow_beacon_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_yogg_saron_shadow_beacon_AuraScript);
+        void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            if (Creature* target = GetTarget()->ToCreature())
+                target->SetEntry(NPC_MARKED_IMMORTAL_GUARDIAN);
+        }
+        void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        {
+            if (Creature* target = GetTarget()->ToCreature())
+                target->SetEntry(NPC_IMMORTAL_GUARDIAN);
+        }
+        void Register()
+        {
+            AfterEffectApply += AuraEffectApplyFn(spell_yogg_saron_shadow_beacon_AuraScript::OnApply, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
+            AfterEffectRemove += AuraEffectRemoveFn(spell_yogg_saron_shadow_beacon_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+    AuraScript* GetAuraScript() const
+    {
+        return new spell_yogg_saron_shadow_beacon_AuraScript();
+    }
+};
+
 class spell_yogg_saron_titanic_storm : public SpellScriptLoader
 {
     public:
