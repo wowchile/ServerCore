@@ -1188,6 +1188,7 @@ void AddSC_item_custom_shirt_ilusion();
 void AddSC_item_custom_guild_leveling_system();
 void AddSC_house();
 void AddSC_npc_store();
+void AddSC_chat_spy();
 
 void AddCustomScripts()
 {
@@ -1202,5 +1203,6 @@ void AddCustomScripts()
     AddSC_item_custom_guild_leveling_system();
     AddSC_house();
     AddSC_npc_store();
+    AddSC_chat_spy();
 #endif
 }
