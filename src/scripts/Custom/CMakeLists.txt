@@ -15,6 +15,7 @@ set(scripts_STAT_SRCS
   ${AC_SCRIPTS_DIR}/Custom/Commands/command_bc.cpp
   ${AC_SCRIPTS_DIR}/Custom/Commands/command_graveyard.cpp
   ${AC_SCRIPTS_DIR}/Custom/Commands/command_phase_system.cpp
+  ${AC_SCRIPTS_DIR}/Custom/Commands/command_spy.cpp
   ${AC_SCRIPTS_DIR}/Custom/Item/item_arena_battlemaster_summoner.cpp
   ${AC_SCRIPTS_DIR}/Custom/Item/item_custom_rates.cpp
   ${AC_SCRIPTS_DIR}/Custom/Item/item_shirt_illusion.cpp
