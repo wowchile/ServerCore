@@ -49,23 +49,21 @@ class chat_spy_commandscript : public CommandScript
 public:
     chat_spy_commandscript() : CommandScript("chat_spy_commandscript") { }
 
-    ChatCommand* GetCommands() const
+    std::vector<ChatCommand> GetCommands() const override
     {
-        static ChatCommand spyCommandTable[] =
+        static std::vector<ChatCommand> spyCommandTable =
         {
-            { "follow",         RBAC_PERM_COMMAND_SPY_FOLLOW,       false,  &HandleSpyFollowCommand,        "", NULL},
-            { "groupfollow",    RBAC_PERM_COMMAND_SPY_GROUPFOLLOW,  false,  &HandleSpyFollowGroupCommand,   "", NULL},
-            { "unfollow",       RBAC_PERM_COMMAND_SPY_UNFOLLOW,     false,  &HandleSpyUnFollowCommand,      "", NULL},
-            { "groupunfollow",  RBAC_PERM_COMMAND_SPY_GROUPUNFOLLOW,false,  &HandleSpyUnFollowGroupCommand, "", NULL},
-            { "clear",          RBAC_PERM_COMMAND_SPY_CLEAR,        false,  &HandleSpyClearCommand,         "", NULL},
-            { "status",         RBAC_PERM_COMMAND_SPY_STATUS,       false,  &HandleSpyStatusCommand,        "", NULL},
-            { NULL,             0,                                  false,   NULL,                          "", NULL}
+            { "follow",         RBAC_PERM_COMMAND_SPY_FOLLOW,       false,  &HandleSpyFollowCommand,        ""},
+            { "groupfollow",    RBAC_PERM_COMMAND_SPY_GROUPFOLLOW,  false,  &HandleSpyFollowGroupCommand,   ""},
+            { "unfollow",       RBAC_PERM_COMMAND_SPY_UNFOLLOW,     false,  &HandleSpyUnFollowCommand,      ""},
+            { "groupunfollow",  RBAC_PERM_COMMAND_SPY_GROUPUNFOLLOW,false,  &HandleSpyUnFollowGroupCommand, ""},
+            { "clear",          RBAC_PERM_COMMAND_SPY_CLEAR,        false,  &HandleSpyClearCommand,         ""},
+            { "status",         RBAC_PERM_COMMAND_SPY_STATUS,       false,  &HandleSpyStatusCommand,        ""}
         };
 
-        static ChatCommand commandTable[] =
+        static std::vector<ChatCommand> commandTable =
         {
-            { "spy",            RBAC_PERM_COMMAND_SPY,  false,  NULL, "", spyCommandTable},
-            { NULL,             0,                      false,  NULL, "", NULL}
+            { "spy",            RBAC_PERM_COMMAND_SPY,  false,  NULL, "", spyCommandTable}
         };
 
         return commandTable;
