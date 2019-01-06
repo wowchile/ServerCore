@@ -140,7 +140,7 @@ class BattlegroundMgr
                 Battleground* bg = itr->second;
                 if (bg->GetBgTypeID() == bgTypeId)
                 {
-                    filteredBgs[bg->GetInstanceID] = bg;
+                    filteredBgs[bg->GetInstanceID()] = bg;
                 }
             }
 
