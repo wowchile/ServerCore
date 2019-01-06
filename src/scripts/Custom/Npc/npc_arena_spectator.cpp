@@ -76,10 +76,11 @@ enum PlayerArenaSlots
 
 const uint8 GAMES_ON_PAGE = 15;
 std::vector<Battleground*> ratedArenas;
-std::map<uint8, uint8> arenaTypeSlots;
-arenaTypeSlots[ARENA_TYPE_2v2] = SLOT_ARENA_2v2;
-arenaTypeSlots[ARENA_TYPE_3v3] = SLOT_ARENA_3v3;
-arenaTypeSlots[ARENA_TYPE_5v5] = SLOT_ARENA_5v5;
+std::map<uint8, uint8> arenaTypeSlots = {
+    { ARENA_TYPE_2v2, SLOT_ARENA_2v2 },
+    { ARENA_TYPE_3v3, SLOT_ARENA_3v3 },
+    { ARENA_TYPE_5v5, SLOT_ARENA_5v5 }
+};
 
 void LoadAllArenas()
 {
