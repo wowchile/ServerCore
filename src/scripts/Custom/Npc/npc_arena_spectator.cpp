@@ -545,7 +545,7 @@ public:
     }
 };
 
-void AddSC_battleground_arena_spectate()
+void AddSC_npc_arena_spectator()
 {
     new npc_arena_spectator();
 }
