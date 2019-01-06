@@ -1203,7 +1203,7 @@ void AddCustomScripts()
     AddSC_item_custom_shirt_ilusion();
     AddSC_item_custom_guild_leveling_system();
     AddSC_house();
-    AddSC_npc_arena_spectator()
+    AddSC_npc_arena_spectator();
     AddSC_npc_store();
     AddSC_chat_spy();
 #endif
