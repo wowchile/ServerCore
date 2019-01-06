@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Pet.h"
 #include "ArenaTeam.h"
+#include "ArenaSpectator.h"
 #include "Battleground.h"
 #include "BattlegroundMgr.h"
 #include "CreatureTextMgr.h"
@@ -87,7 +88,7 @@ void LoadAllArenas()
 
         BattlegroundContainer arenas = sBattlegroundMgr->GetAllBattlegroundsWithTypeId(BattlegroundTypeId(i));
 
-        if (!arenas || arenas.empty())
+        if (arenas.empty())
             continue;
 
         for (BattlegroundContainer::const_iterator itr = arenas.begin(); itr != arenas.end(); ++itr)
@@ -353,7 +354,7 @@ public:
                 if (player->IsGameMaster())
                     continue;
 
-                uint32 team = itr->second.Team;
+                uint32 team = itr->second->Team;
                 if (!firstTeamId)
                     firstTeamId = team;
 
@@ -383,6 +384,7 @@ public:
 
     void GetTeamsMMRs(Battleground* arena, Player* target, uint16 &mmrOne, uint16 &mmrTwo)
     {
+        uint32 firstTeamId = target->GetArenaTeamId(arenaSlot);
         uint8 arenaSlot = 0;
         switch (arena->GetArenaType())
         {
@@ -400,11 +402,10 @@ public:
         }
 
         // Get first team MMR using target player
-        if (ArenaTeam *targetArenaMmr = sArenaTeamMgr->GetArenaTeamById(target->GetArenaTeamId(arenaSlot)))
+        if (ArenaTeam *targetArenaMmr = sArenaTeamMgr->GetArenaTeamById(firstTeamId))
             mmrOne = targetArenaMmr->GetMember(target->GetGUID())->MatchMakerRating;
 
         // Find second team MMR
-        firstTeamId = target->GetArenaTeamId(arenaSlot);
         Battleground::BattlegroundPlayerMap::const_iterator citr = arena->GetPlayers().begin();
         for (; citr != arena->GetPlayers().end(); ++citr)
         {
@@ -422,7 +423,6 @@ public:
 
     void ShowPage(Player* player, uint16 page, bool IsTop)
     {
-        uint32 firstTeamId = 0;
         uint16 TypeTwo = 0;
         uint16 TypeThree = 0;
         uint16 TypeFive = 0;
@@ -440,7 +440,7 @@ public:
 
             BattlegroundContainer arenas = sBattlegroundMgr->GetAllBattlegroundsWithTypeId(BattlegroundTypeId(i));
 
-            if (!arenas || arenas.empty())
+            if (arenas.empty())
                 continue;
 
             for (BattlegroundContainer::const_iterator itr = arenas.begin(); itr != arenas.end(); ++itr)
