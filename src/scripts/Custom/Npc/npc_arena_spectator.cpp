@@ -11,8 +11,6 @@
 #include "BattlegroundMgr.h"
 #include "CreatureTextMgr.h"
 
-std::vector<Battleground*> ratedArenas;
-
 enum ClassTalents
 {
     SPELL_DK_BLOOD                  = 62905,    // Not Dancing Rune Weapon (i used Improved Death Strike)
@@ -77,6 +75,11 @@ enum PlayerArenaSlots
 };
 
 const uint8 GAMES_ON_PAGE = 15;
+std::vector<Battleground*> ratedArenas;
+std::map<uint8, uint8> arenaTypeSlots;
+arenaTypeSlots[ARENA_TYPE_2v2] = SLOT_ARENA_2v2;
+arenaTypeSlots[ARENA_TYPE_3v3] = SLOT_ARENA_3v3;
+arenaTypeSlots[ARENA_TYPE_5v5] = SLOT_ARENA_5v5;
 
 void LoadAllArenas()
 {
@@ -354,11 +357,11 @@ public:
                 if (player->IsGameMaster())
                     continue;
 
-                uint32 team = itr->second->Team;
+                uint32 teamId = itr->second->GetArenaTeamId(arenaTypeSlots[team->GetArenaType()]);
                 if (!firstTeamId)
-                    firstTeamId = team;
+                    firstTeamId = teamId;
 
-                teamsMember[firstTeamId == team] += GetClassNameById(player);
+                teamsMember[firstTeamId == teamId] += GetClassNameById(player);
             }
         }
 
@@ -384,22 +387,8 @@ public:
 
     void GetTeamsMMRs(Battleground* arena, Player* target, uint16 &mmrOne, uint16 &mmrTwo)
     {
+        uint8 arenaSlot = arenaTypeSlots[arena->GetArenaType()];
         uint32 firstTeamId = target->GetArenaTeamId(arenaSlot);
-        uint8 arenaSlot = 0;
-        switch (arena->GetArenaType())
-        {
-            case ARENA_TYPE_2v2:
-                arenaSlot = SLOT_ARENA_2v2;
-                break;
-            case ARENA_TYPE_3v3:
-                arenaSlot = SLOT_ARENA_3v3;
-                break;
-            case ARENA_TYPE_5v5:
-                arenaSlot = SLOT_ARENA_5v5;
-                break;
-            default: // do nothing
-                break;
-        }
 
         // Get first team MMR using target player
         if (ArenaTeam *targetArenaMmr = sArenaTeamMgr->GetArenaTeamById(firstTeamId))
