@@ -20,6 +20,7 @@ set(scripts_STAT_SRCS
   ${AC_SCRIPTS_DIR}/Custom/Item/item_custom_rates.cpp
   ${AC_SCRIPTS_DIR}/Custom/Item/item_shirt_illusion.cpp
   ${AC_SCRIPTS_DIR}/Custom/Item/item_guild_vault_mobile.cpp
+  ${AC_SCRIPTS_DIR}/Custom/Npc/npc_arena_spectator.cpp
   ${AC_SCRIPTS_DIR}/Custom/Npc/npc_house_trigger.cpp
   ${AC_SCRIPTS_DIR}/Custom/Npc/npc_store.cpp
 )

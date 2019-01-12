@@ -131,6 +131,22 @@ class BattlegroundMgr
         const BattlegroundContainer& GetBattlegroundList() { return m_Battlegrounds; } // pussywizard
         RandomBattlegroundSystem RandomSystem; // pussywizard
 
+        BattlegroundContainer GetAllBattlegroundsWithTypeId(BattlegroundTypeId bgTypeId)
+        {
+            BattlegroundContainer filteredBgs;
+
+            for (BattlegroundContainer::iterator itr = m_Battlegrounds.begin(); itr != m_Battlegrounds.end(); ++itr)
+            {
+                Battleground* bg = itr->second;
+                if (bg->GetBgTypeID() == bgTypeId)
+                {
+                    filteredBgs[bg->GetInstanceID()] = bg;
+                }
+            }
+
+            return filteredBgs;
+        }
+
     private:
         bool CreateBattleground(CreateBattlegroundData& data);
         uint32 GetNextClientVisibleInstanceId();
